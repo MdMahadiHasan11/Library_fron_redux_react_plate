@@ -3,14 +3,14 @@ import {
   useUpdateBookMutation,
 } from "@/redux/api/booksApi";
 import { useNavigate, useParams } from "react-router";
-
 import { toast } from "react-hot-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import type { IBook } from "@/types";
-
 import { useTheme } from "@/hooks/useTheme";
 import EditBookForm from "@/components/book/EditBookForm";
 import { useForm } from "react-hook-form";
+import { BookOpenIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type ApiError = {
   data?: {
@@ -75,6 +75,8 @@ const EditBook = () => {
         style: {
           background: theme === "dark" ? "#020817" : "#fff",
           color: theme === "dark" ? "#fff" : "#000",
+          borderRadius: "8px",
+          padding: "12px",
         },
       });
     } else {
@@ -82,6 +84,8 @@ const EditBook = () => {
         style: {
           background: theme === "dark" ? "#020817" : "#fff",
           color: theme === "dark" ? "#fff" : "#000",
+          borderRadius: "8px",
+          padding: "12px",
         },
       });
     }
@@ -95,6 +99,8 @@ const EditBook = () => {
         style: {
           background: theme === "dark" ? "#020817" : "#fff",
           color: theme === "dark" ? "#fff" : "#000",
+          borderRadius: "8px",
+          padding: "12px",
         },
       });
       navigate(`/books/${values._id}`);
@@ -106,31 +112,33 @@ const EditBook = () => {
   if (isBookLoading) {
     return (
       <div
-        className={`container mx-auto p-4 max-w-4xl ${
-          theme === "dark" ? "bg-gray-900" : "bg-white"
-        }`}>
+        className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto ${
+          theme === "dark" ? "bg-gray-950" : "bg-gray-50"
+        } transition-colors duration-300`}
+      >
         <div
-          className={`rounded-lg border shadow-sm p-6 ${
+          className={`rounded-xl border shadow-md p-8 ${
             theme === "dark"
-              ? "bg-gray-800 border-gray-700"
+              ? "bg-gray-800/90 border-gray-700"
               : "bg-white border-gray-200"
-          }`}>
-          <Skeleton className='h-8 w-1/3 mb-6' />
-          <div className='grid grid-cols-1 md:grid-cols-2 gap-6 mb-6'>
+          }`}
+        >
+          <Skeleton className="h-10 w-1/3 mb-8 rounded-md" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {[...Array(6)].map((_, i) => (
-              <div key={i} className='space-y-2'>
-                <Skeleton className='h-5 w-1/4' />
-                <Skeleton className='h-9 w-full' />
+              <div key={i} className="space-y-3">
+                <Skeleton className="h-5 w-1/4 rounded-md" />
+                <Skeleton className="h-10 w-full rounded-md" />
               </div>
             ))}
           </div>
-          <div className='space-y-2 mb-6'>
-            <Skeleton className='h-5 w-1/4' />
-            <Skeleton className='h-24 w-full' />
+          <div className="space-y-3 mb-8">
+            <Skeleton className="h-5 w-1/4 rounded-md" />
+            <Skeleton className="h-32 w-full rounded-md" />
           </div>
-          <div className='flex justify-end gap-2'>
-            <Skeleton className='h-9 w-24' />
-            <Skeleton className='h-9 w-24' />
+          <div className="flex justify-end gap-3">
+            <Skeleton className="h-10 w-28 rounded-full" />
+            <Skeleton className="h-10 w-28 rounded-full" />
           </div>
         </div>
       </div>
@@ -140,33 +148,67 @@ const EditBook = () => {
   if (!book) {
     return (
       <div
-        className={`container mx-auto p-4 max-w-4xl text-center ${
+        className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center ${
           theme === "dark"
-            ? "bg-gray-900 text-gray-100"
-            : "bg-white text-gray-900"
-        }`}>
-        Book not found
+            ? "bg-gray-950 text-gray-100"
+            : "bg-gray-50 text-gray-900"
+        } transition-colors duration-300`}
+      >
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold tracking-tight">Book Not Found</h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            The book you are trying to edit does not exist or has been removed.
+          </p>
+          <Button
+            asChild
+            variant="default"
+            className={`rounded-full px-6 py-2 font-semibold ${
+              theme === "dark"
+                ? "bg-blue-600 hover:bg-blue-700 text-white"
+                : "bg-blue-500 hover:bg-blue-600 text-white"
+            } transition-all duration-200 hover:scale-105`}
+          >
+            <a href="/books">Back to Books</a>
+          </Button>
+        </div>
       </div>
     );
   }
 
   return (
     <div
-      className={`container mx-auto p-4 max-w-4xl ${
-        theme === "dark" ? "bg-gray-900" : "bg-white"
-      }`}>
+      className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto ${
+        theme === "dark" ? "bg-gray-950" : "bg-gray-50"
+      } transition-colors duration-300`}
+    >
       <div
-        className={`rounded-lg border shadow-sm p-6 ${
+        className={`rounded-xl border shadow-md p-8 ${
           theme === "dark"
-            ? "bg-gray-800 border-gray-700 text-gray-100"
+            ? "bg-gray-800/90 border-gray-700 text-gray-100"
             : "bg-white border-gray-200 text-gray-900"
-        }`}>
-        <h1 className='text-2xl font-bold mb-6'>Edit Book</h1>
-        <EditBookForm
-          isLoading={isLoading}
-          onSubmit={onSubmit}
-          form={form}
-        />
+        } transition-all duration-200`}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <BookOpenIcon
+            className={`h-10 w-10 ${
+              theme === "dark" ? "text-blue-400" : "text-blue-600"
+            }`}
+            strokeWidth={1.75}
+          />
+          <div>
+            <h1 className="text-3xl font-extrabold tracking-tight">
+              Edit Book
+            </h1>
+            <p
+              className={`text-sm mt-1 ${
+                theme === "dark" ? "text-gray-400" : "text-gray-600"
+              }`}
+            >
+              Update the details below to edit the book.
+            </p>
+          </div>
+        </div>
+        <EditBookForm isLoading={isLoading} onSubmit={onSubmit} form={form} />
       </div>
     </div>
   );

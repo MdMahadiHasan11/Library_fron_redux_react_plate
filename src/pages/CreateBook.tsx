@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTheme } from "@/hooks/useTheme";
+import { BookOpenIcon } from "lucide-react";
 
 type ApiError = {
   data?: {
@@ -75,16 +76,37 @@ const CreateBook = () => {
         .map((err) => err.message)
         .join("\n");
 
-      toast.error(`Validation failed:\n${errorMessages}`);
+      toast.error(`Validation failed:\n${errorMessages}`, {
+        style: {
+          background: theme === "dark" ? "#020817" : "#fff",
+          color: theme === "dark" ? "#fff" : "#000",
+          borderRadius: "8px",
+          padding: "12px",
+        },
+      });
     } else {
-      toast.error(error.data?.message || "Failed to add book");
+      toast.error(error.data?.message || "Failed to add book", {
+        style: {
+          background: theme === "dark" ? "#020817" : "#fff",
+          color: theme === "dark" ? "#fff" : "#000",
+          borderRadius: "8px",
+          padding: "12px",
+        },
+      });
     }
   };
 
   const onSubmit = async (values: Omit<IBook, "_id">) => {
     try {
       await addBook(values).unwrap();
-      toast.success("Book added successfully");
+      toast.success("Book added successfully", {
+        style: {
+          background: theme === "dark" ? "#020817" : "#fff",
+          color: theme === "dark" ? "#fff" : "#000",
+          borderRadius: "8px",
+          padding: "12px",
+        },
+      });
       navigate("/books");
     } catch (error) {
       handleApiError(error as ApiError);
@@ -93,124 +115,165 @@ const CreateBook = () => {
 
   return (
     <div
-      className={`container mx-auto p-4 max-w-4xl ${
-        theme === "dark" ? "bg-gray-900" : "bg-white"
-      }`}>
+      className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto ${
+        theme === "dark" ? "bg-gray-950" : "bg-gray-50"
+      } transition-colors duration-300`}
+    >
       <div
-        className={`rounded-lg border shadow-sm p-6 ${
+        className={`rounded-xl border shadow-md p-8 ${
           theme === "dark"
-            ? "bg-gray-800 border-gray-700 text-gray-100"
+            ? "bg-gray-800/90 border-gray-700 text-gray-100"
             : "bg-white border-gray-200 text-gray-900"
-        }`}>
-        <h1 className='text-2xl font-bold mb-6'>Add New Book</h1>
+        } transition-all duration-200`}
+      >
+        <div className="flex items-center gap-3 mb-8">
+          <BookOpenIcon
+            className={`h-10 w-10 ${
+              theme === "dark" ? "text-blue-400" : "text-blue-600"
+            }`}
+            strokeWidth={1.75}
+          />
+          <div>
+            <h1 className="text-3xl font-extrabold tracking-tight">
+              Add New Book
+            </h1>
+            <p
+              className={`text-sm mt-1 ${
+                theme === "dark" ? "text-gray-400" : "text-gray-600"
+              }`}
+            >
+              Fill in the details below to add a new book to the library.
+            </p>
+          </div>
+        </div>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
                 control={form.control}
-                name='title'
+                name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Title*</FormLabel>
+                    <FormLabel className="text-sm font-medium">
+                      Title <span className="text-red-500">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder='Book title'
+                        placeholder="Enter book title"
                         {...field}
-                        className={
-                          theme === "dark" ? "bg-gray-700 border-gray-600" : ""
-                        }
+                        className={`rounded-lg ${
+                          theme === "dark"
+                            ? "bg-gray-700 border-gray-600 text-gray-100"
+                            : "bg-white border-gray-300"
+                        } focus:ring-2 focus:ring-blue-500`}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-sm text-red-500" />
                   </FormItem>
                 )}
               />
 
               <FormField
                 control={form.control}
-                name='author'
+                name="author"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Author*</FormLabel>
+                    <FormLabel className="text-sm font-medium">
+                      Author <span className="text-red-500">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder='Author name'
+                        placeholder="Enter author name"
                         {...field}
-                        className={
-                          theme === "dark" ? "bg-gray-700 border-gray-600" : ""
-                        }
+                        className={`rounded-lg ${
+                          theme === "dark"
+                            ? "bg-gray-700 border-gray-600 text-gray-100"
+                            : "bg-white border-gray-300"
+                        } focus:ring-2 focus:ring-blue-500`}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-sm text-red-500" />
                   </FormItem>
                 )}
               />
 
               <FormField
                 control={form.control}
-                name='genre'
+                name="genre"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Genre</FormLabel>
+                    <FormLabel className="text-sm font-medium">Genre</FormLabel>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value}>
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger
-                          className={`w-full ${
+                          className={`rounded-lg ${
                             theme === "dark"
-                              ? "bg-gray-700 border-gray-600"
-                              : ""
-                          }`}>
-                          <SelectValue placeholder='Select a genre to set' />
+                              ? "bg-gray-700 border-gray-600 text-gray-100"
+                              : "bg-white border-gray-300"
+                          } focus:ring-2 focus:ring-blue-500`}
+                        >
+                          <SelectValue placeholder="Select a genre" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent
-                        className={
-                          theme === "dark" ? "bg-gray-800 border-gray-700" : ""
-                        }>
-                        <SelectItem value='FICTION'>FICTION</SelectItem>
-                        <SelectItem value='NON_FICTION'>NON_FICTION</SelectItem>
-                        <SelectItem value='SCIENCE'>SCIENCE</SelectItem>
-                        <SelectItem value='HISTORY'>HISTORY</SelectItem>
-                        <SelectItem value='BIOGRAPHY'>BIOGRAPHY</SelectItem>
-                        <SelectItem value='FANTASY'>FANTASY</SelectItem>
+                        className={`rounded-lg ${
+                          theme === "dark"
+                            ? "bg-gray-800 border-gray-700 text-gray-100"
+                            : "bg-white border-gray-300"
+                        }`}
+                      >
+                        <SelectItem value="FICTION">Fiction</SelectItem>
+                        <SelectItem value="NON_FICTION">Non-Fiction</SelectItem>
+                        <SelectItem value="SCIENCE">Science</SelectItem>
+                        <SelectItem value="HISTORY">History</SelectItem>
+                        <SelectItem value="BIOGRAPHY">Biography</SelectItem>
+                        <SelectItem value="FANTASY">Fantasy</SelectItem>
                       </SelectContent>
                     </Select>
+                    <FormMessage className="text-sm text-red-500" />
                   </FormItem>
                 )}
               />
 
               <FormField
                 control={form.control}
-                name='isbn'
+                name="isbn"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>ISBN*</FormLabel>
+                    <FormLabel className="text-sm font-medium">
+                      ISBN <span className="text-red-500">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder='ISBN number'
+                        placeholder="Enter ISBN number"
                         {...field}
-                        className={
-                          theme === "dark" ? "bg-gray-700 border-gray-600" : ""
-                        }
+                        className={`rounded-lg ${
+                          theme === "dark"
+                            ? "bg-gray-700 border-gray-600 text-gray-100"
+                            : "bg-white border-gray-300"
+                        } focus:ring-2 focus:ring-blue-500`}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-sm text-red-500" />
                   </FormItem>
                 )}
               />
 
               <FormField
                 control={form.control}
-                name='publishedYear'
+                name="publishedYear"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Publication Year</FormLabel>
+                    <FormLabel className="text-sm font-medium">
+                      Publication Year
+                    </FormLabel>
                     <FormControl>
                       <Input
-                        type='number'
+                        type="number"
                         max={new Date().getFullYear()}
                         min={1600}
                         {...field}
@@ -222,57 +285,69 @@ const CreateBook = () => {
                               : parseInt(e.target.value)
                           )
                         }
-                        className={
-                          theme === "dark" ? "bg-gray-700 border-gray-600" : ""
-                        }
+                        className={`rounded-lg ${
+                          theme === "dark"
+                            ? "bg-gray-700 border-gray-600 text-gray-100"
+                            : "bg-white border-gray-300"
+                        } focus:ring-2 focus:ring-blue-500`}
+                        placeholder="Enter publication year"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-sm text-red-500" />
                   </FormItem>
                 )}
               />
 
               <FormField
                 control={form.control}
-                name='copies'
+                name="copies"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Copies*</FormLabel>
+                    <FormLabel className="text-sm font-medium">
+                      Copies <span className="text-red-500">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input
-                        type='number'
-                        min='1'
+                        type="number"
+                        min="1"
                         {...field}
                         onChange={(e) => {
                           const value = parseInt(e.target.value);
                           field.onChange(isNaN(value) ? "" : value);
                         }}
-                        className={
-                          theme === "dark" ? "bg-gray-700 border-gray-600" : ""
-                        }
+                        className={`rounded-lg ${
+                          theme === "dark"
+                            ? "bg-gray-700 border-gray-600 text-gray-100"
+                            : "bg-white border-gray-300"
+                        } focus:ring-2 focus:ring-blue-500`}
+                        placeholder="Enter number of copies"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-sm text-red-500" />
                   </FormItem>
                 )}
               />
 
               <FormField
                 control={form.control}
-                name='image'
+                name="image"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Cover Image URL</FormLabel>
+                    <FormLabel className="text-sm font-medium">
+                      Cover Image URL
+                    </FormLabel>
                     <FormControl>
                       <Input
-                        placeholder='Image URL'
+                        placeholder="Enter image URL"
                         {...field}
-                        className={
-                          theme === "dark" ? "bg-gray-700 border-gray-600" : ""
-                        }
+                        className={`rounded-lg ${
+                          theme === "dark"
+                            ? "bg-gray-700 border-gray-600 text-gray-100"
+                            : "bg-white border-gray-300"
+                        } focus:ring-2 focus:ring-blue-500`}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-sm text-red-500" />
                   </FormItem>
                 )}
               />
@@ -280,33 +355,50 @@ const CreateBook = () => {
 
             <FormField
               control={form.control}
-              name='description'
+              name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description*</FormLabel>
+                  <FormLabel className="text-sm font-medium">
+                    Description <span className="text-red-500">*</span>
+                  </FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder='Book description'
-                      className={`min-h-[120px] ${
-                        theme === "dark" ? "bg-gray-700 border-gray-600" : ""
-                      }`}
+                      placeholder="Enter book description"
+                      className={`min-h-[140px] rounded-lg ${
+                        theme === "dark"
+                          ? "bg-gray-700 border-gray-600 text-gray-100"
+                          : "bg-white border-gray-300"
+                      } focus:ring-2 focus:ring-blue-500`}
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-sm text-red-500" />
                 </FormItem>
               )}
             />
 
-            <div className='flex justify-end gap-2'>
+            <div className="flex justify-end gap-3">
               <Button
-                type='button'
-                variant='outline'
+                type="button"
+                variant="outline"
                 onClick={() => navigate("/books")}
-                className={theme === "dark" ? "border-gray-600" : ""}>
+                className={`rounded-full px-6 py-2 font-semibold ${
+                  theme === "dark"
+                    ? "border-gray-600 text-gray-100 hover:bg-gray-700"
+                    : "border-gray-300 hover:bg-gray-100"
+                } transition-all duration-200 hover:scale-105`}
+              >
                 Cancel
               </Button>
-              <Button type='submit' disabled={isLoading}>
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className={`rounded-full px-6 py-2 font-semibold ${
+                  theme === "dark"
+                    ? "bg-blue-600 hover:bg-blue-700 text-white"
+                    : "bg-blue-500 hover:bg-blue-600 text-white"
+                } transition-all duration-200 hover:scale-105`}
+              >
                 {isLoading ? "Adding..." : "Add Book"}
               </Button>
             </div>

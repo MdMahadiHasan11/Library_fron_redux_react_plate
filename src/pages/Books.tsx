@@ -39,16 +39,26 @@ const Books = () => {
 
   if (isError) {
     return (
-      <div className={`flex items-center justify-center h-64 ${
-        theme === "dark" ? "bg-gray-900" : "bg-white"
-      }`}>
-        <div className='text-center'>
-          <h2 className='text-xl font-semibold'>Error loading books</h2>
+      <div
+        className={`flex items-center justify-center min-h-[400px] rounded-lg shadow-lg ${
+          theme === "dark"
+            ? "bg-gray-900 text-gray-100"
+            : "bg-white text-gray-900"
+        }`}
+      >
+        <div className="text-center space-y-4">
+          <h2 className="text-2xl font-bold tracking-tight">
+            Error Loading Books
+          </h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Something went wrong while fetching the book collection.
+          </p>
           <Button
-            variant='outline'
-            className='mt-4'
-            onClick={() => window.location.reload()}>
-            Retry
+            variant="default"
+            className="mt-4 rounded-full px-6 py-2 font-semibold transition-all hover:scale-105"
+            onClick={() => window.location.reload()}
+          >
+            Try Again
           </Button>
         </div>
       </div>
@@ -56,104 +66,145 @@ const Books = () => {
   }
 
   return (
-    <div className={`space-y-6 ${theme === "dark" ? "" : "bg-white"}`}>
-      <div className='flex gap-4 items-center justify-center pt-8'>
-        <BookCopy className='h-10 w-10' strokeWidth={1.5} />
-        <h1 className={`text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold ${
-          theme === "dark" ? "text-gray-100" : "text-gray-900"
-        }`}>
+    <div
+      className={`min-h-screen py-12 px-4 sm:px-6 lg:px-8 ${
+        theme === "dark" ? "bg-gray-950" : "bg-gray-50"
+      } transition-colors duration-300`}
+    >
+      {/* Header Section */}
+      <div className="flex flex-col items-center justify-center gap-3 mb-10">
+        <BookCopy
+          className={`h-12 w-12 ${
+            theme === "dark" ? "text-blue-400" : "text-blue-600"
+          }`}
+          strokeWidth={1.75}
+        />
+        <h1
+          className={`text-3xl sm:text-4xl font-extrabold tracking-tight ${
+            theme === "dark" ? "text-gray-100" : "text-gray-900"
+          }`}
+        >
           Our Book Collection
         </h1>
+        <p
+          className={`text-sm sm:text-base text-center max-w-md ${
+            theme === "dark" ? "text-gray-400" : "text-gray-600"
+          }`}
+        >
+          Explore our curated selection of books across various genres.
+        </p>
       </div>
 
       {/* Filter and Sort Controls */}
-      <div className={`flex flex-wrap gap-4 items-center justify-center p-4 rounded-lg mx-4 ${
-        theme === "dark" 
-          ? "bg-gray-800 border-gray-700" 
-          : "bg-gray-50 border-gray-200"
-      }`}>
+      <div
+        className={`flex flex-wrap gap-4 items-center justify-center p-6 rounded-xl shadow-sm mb-8 mx-auto max-w-4xl ${
+          theme === "dark"
+            ? "bg-gray-800/80 border-gray-700"
+            : "bg-white border-gray-200"
+        } border transition-all duration-200`}
+      >
         {/* Genre Filter */}
-        <div className='flex items-center gap-2'>
-          <Label>Genre:</Label>
+        <div className="flex flex-col gap-1 min-w-[180px]">
+          <Label className="text-sm font-medium">Genre</Label>
           <Select
             value={filter}
             onValueChange={(value) => {
               setFilter(value);
               setPage(1);
-            }}>
-            <SelectTrigger className='w-[180px]'>
-              <SelectValue placeholder='All Genres' />
+            }}
+          >
+            <SelectTrigger
+              className={`w-full rounded-lg ${
+                theme === "dark" ? "bg-gray-700 text-gray-100" : "bg-white"
+              }`}
+            >
+              <SelectValue placeholder="All Genres" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value='all'>All Genres</SelectItem>
-              <SelectItem value='FICTION'>Fiction</SelectItem>
-              <SelectItem value='NON_FICTION'>Non-Fiction</SelectItem>
-              <SelectItem value='SCIENCE'>Science</SelectItem>
-              <SelectItem value='FANTASY'>Fantasy</SelectItem>
+            <SelectContent className="rounded-lg">
+              <SelectItem value="all">All Genres</SelectItem>
+              <SelectItem value="FICTION">Fiction</SelectItem>
+              <SelectItem value="NON_FICTION">Non-Fiction</SelectItem>
+              <SelectItem value="SCIENCE">Science</SelectItem>
+              <SelectItem value="FANTASY">Fantasy</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         {/* Sort By */}
-        <div className='flex items-center gap-2'>
-          <Label>Sort By:</Label>
+        <div className="flex flex-col gap-1 min-w-[180px]">
+          <Label className="text-sm font-medium">Sort By</Label>
           <Select
             value={sortBy}
             onValueChange={(value) => {
               setSortBy(value);
               setPage(1);
-            }}>
-            <SelectTrigger className='w-[180px]'>
-              <SelectValue placeholder='Sort By' />
+            }}
+          >
+            <SelectTrigger
+              className={`w-full rounded-lg ${
+                theme === "dark" ? "bg-gray-700 text-gray-100" : "bg-white"
+              }`}
+            >
+              <SelectValue placeholder="Sort By" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value='createdAt'>Created Date</SelectItem>
-              <SelectItem value='title'>Title</SelectItem>
-              <SelectItem value='author'>Author</SelectItem>
+            <SelectContent className="rounded-lg">
+              <SelectItem value="createdAt">Created Date</SelectItem>
+              <SelectItem value="title">Title</SelectItem>
+              <SelectItem value="author">Author</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         {/* Sort Order */}
-        <div className='flex items-center gap-2'>
-          <Label>Order:</Label>
+        <div className="flex flex-col gap-1 min-w-[120px]">
+          <Label className="text-sm font-medium">Order</Label>
           <Select
             value={sortOrder}
             onValueChange={(value) => {
               setSortOrder(value);
               setPage(1);
-            }}>
-            <SelectTrigger className='w-[120px]'>
-              <SelectValue placeholder='Order' />
+            }}
+          >
+            <SelectTrigger
+              className={`w-full rounded-lg ${
+                theme === "dark" ? "bg-gray-700 text-gray-100" : "bg-white"
+              }`}
+            >
+              <SelectValue placeholder="Order" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value='desc'>Descending</SelectItem>
-              <SelectItem value='asc'>Ascending</SelectItem>
+            <SelectContent className="rounded-lg">
+              <SelectItem value="desc">Descending</SelectItem>
+              <SelectItem value="asc">Ascending</SelectItem>
             </SelectContent>
           </Select>
         </div>
 
         {/* Items Per Page */}
-        <div className='flex items-center gap-2'>
-          <Label>Items:</Label>
+        <div className="flex flex-col gap-1 min-w-[100px]">
+          <Label className="text-sm font-medium">Items Per Page</Label>
           <Select
             value={limit.toString()}
             onValueChange={(value) => {
               setLimit(Number(value));
               setPage(1);
-            }}>
-            <SelectTrigger className='w-[100px]'>
-              <SelectValue placeholder='12' />
+            }}
+          >
+            <SelectTrigger
+              className={`w-full rounded-lg ${
+                theme === "dark" ? "bg-gray-700 text-gray-100" : "bg-white"
+              }`}
+            >
+              <SelectValue placeholder="12" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value='4'>4</SelectItem>
-              <SelectItem value='8'>8</SelectItem>
-              <SelectItem value='10'>10</SelectItem>
-              <SelectItem value='12'>12</SelectItem>
-              <SelectItem value='16'>16</SelectItem>
-              <SelectItem value='20'>20</SelectItem>
-              <SelectItem value='28'>28</SelectItem>
-              <SelectItem value='50'>50</SelectItem>
+            <SelectContent className="rounded-lg">
+              <SelectItem value="4">4</SelectItem>
+              <SelectItem value="8">8</SelectItem>
+              <SelectItem value="10">10</SelectItem>
+              <SelectItem value="12">12</SelectItem>
+              <SelectItem value="16">16</SelectItem>
+              <SelectItem value="20">20</SelectItem>
+              <SelectItem value="28">28</SelectItem>
+              <SelectItem value="50">50</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -161,16 +212,22 @@ const Books = () => {
 
       {/* Content */}
       {isLoading ? (
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4'>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4 max-w-7xl mx-auto">
           {Array.from({ length: limit }).map((_, i) => (
-            <Card key={i} className={theme === "dark" ? "bg-gray-800" : ""}>
+            <Card
+              key={i}
+              className={`${
+                theme === "dark" ? "bg-gray-800/90" : "bg-white"
+              } rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200`}
+            >
               <CardHeader>
-                <Skeleton className='h-6 w-3/4' />
-                <Skeleton className='h-4 w-1/2 mt-2' />
+                <Skeleton className="h-6 w-3/4 rounded-md" />
+                <Skeleton className="h-4 w-1/2 mt-2 rounded-md" />
               </CardHeader>
               <CardContent>
-                <Skeleton className='h-4 w-full' />
-                <Skeleton className='h-4 w-3/4 mt-2' />
+                <Skeleton className="h-48 w-full rounded-md" />
+                <Skeleton className="h-4 w-full mt-4 rounded-md" />
+                <Skeleton className="h-4 w-3/4 mt-2 rounded-md" />
               </CardContent>
             </Card>
           ))}
@@ -178,23 +235,39 @@ const Books = () => {
       ) : (
         <>
           <BookCardView books={books} />
-          <div className='flex items-center justify-center gap-4 mt-8 pb-8'>
+          <div className="flex items-center justify-center gap-4 mt-10 pb-12">
             <Button
-              variant='outline'
-              size='icon'
+              variant="outline"
+              size="icon"
               onClick={handlePreviousPage}
-              disabled={page === 1}>
-              <ChevronLeft className='h-4 w-4' />
+              disabled={page === 1}
+              className={`rounded-full ${
+                theme === "dark"
+                  ? "bg-gray-700 text-gray-100 hover:bg-gray-600"
+                  : "bg-white hover:bg-gray-100"
+              } shadow-sm transition-all duration-200 hover:scale-110`}
+            >
+              <ChevronLeft className="h-5 w-5" />
             </Button>
-            <span className={theme === "dark" ? "text-gray-300" : "text-gray-600"}>
-              Page {page} of {meta.totalPages}
+            <span
+              className={`text-sm font-medium ${
+                theme === "dark" ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
+              Page {page} of {meta.totalPages} ({meta.total} books)
             </span>
             <Button
-              variant='outline'
-              size='icon'
+              variant="outline"
+              size="icon"
               onClick={handleNextPage}
-              disabled={page >= meta.totalPages}>
-              <ChevronRight className='h-4 w-4' />
+              disabled={page >= meta.totalPages}
+              className={`rounded-full ${
+                theme === "dark"
+                  ? "bg-gray-700 text-gray-100 hover:bg-gray-600"
+                  : "bg-white hover:bg-gray-100"
+              } shadow-sm transition-all duration-200 hover:scale-110`}
+            >
+              <ChevronRight className="h-5 w-5" />
             </Button>
           </div>
         </>

@@ -21,123 +21,155 @@ import {
 import { useNavigate } from "react-router";
 import { Checkbox } from "../ui/checkbox";
 
-const EditBookForm = ({
-  form,
-  onSubmit,
-  isLoading,
-}: IBookFormProps) => {
+const EditBookForm = ({ form, onSubmit, isLoading }: IBookFormProps) => {
   const navigate = useNavigate();
   const { theme } = useTheme();
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="space-y-8 p-6 rounded-lg bg-white dark:bg-gray-800 shadow-md max-w-3xl mx-auto"
+      >
+        <h2 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-6">
+          Edit Book Details
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <FormField
             control={form.control}
-            name='title'
+            name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Title*</FormLabel>
+                <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Title*
+                </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder='Book title'
+                    placeholder="Enter book title"
                     {...field}
-                    className={
-                      theme === "dark" ? "bg-gray-700 border-gray-600" : ""
-                    }
+                    className={`rounded-md transition-colors duration-200 ${
+                      theme === "dark"
+                        ? "bg-gray-700 border-gray-600 text-gray-100 focus:ring-blue-500"
+                        : "bg-white border-gray-300 text-gray-900 focus:ring-blue-400"
+                    }`}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-sm text-red-500 dark:text-red-400" />
               </FormItem>
             )}
           />
 
           <FormField
             control={form.control}
-            name='author'
+            name="author"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Author*</FormLabel>
+                <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Author*
+                </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder='Author name'
+                    placeholder="Enter author name"
                     {...field}
-                    className={
-                      theme === "dark" ? "bg-gray-700 border-gray-600" : ""
-                    }
+                    className={`rounded-md transition-colors duration-200 ${
+                      theme === "dark"
+                        ? "bg-gray-700 border-gray-600 text-gray-100 focus:ring-blue-500"
+                        : "bg-white border-gray-300 text-gray-900 focus:ring-blue-400"
+                    }`}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-sm text-red-500 dark:text-red-400" />
               </FormItem>
             )}
           />
 
           <FormField
             control={form.control}
-            name='genre'
+            name="genre"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Genre</FormLabel>
+                <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Genre
+                </FormLabel>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}>
+                  defaultValue={field.value}
+                >
                   <FormControl>
                     <SelectTrigger
-                      className={`w-full ${
-                        theme === "dark" ? "bg-gray-700 border-gray-600" : ""
-                      }`}>
+                      className={`w-full rounded-md transition-colors duration-200 ${
+                        theme === "dark"
+                          ? "bg-gray-700 border-gray-600 text-gray-100 focus:ring-blue-500"
+                          : "bg-white border-gray-300 text-gray-900 focus:ring-blue-400"
+                      }`}
+                    >
                       <SelectValue
-                        placeholder={field.value || "Select a genre to set"}
+                        placeholder={field.value || "Select a genre"}
                       />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent
-                    className={
-                      theme === "dark" ? "bg-gray-800 border-gray-700" : ""
-                    }>
-                    <SelectItem value='FICTION'>FICTION</SelectItem>
-                    <SelectItem value='NON_FICTION'>NON_FICTION</SelectItem>
-                    <SelectItem value='SCIENCE'>SCIENCE</SelectItem>
-                    <SelectItem value='HISTORY'>HISTORY</SelectItem>
-                    <SelectItem value='BIOGRAPHY'>BIOGRAPHY</SelectItem>
-                    <SelectItem value='FANTASY'>FANTASY</SelectItem>
+                    className={`rounded-md ${
+                      theme === "dark"
+                        ? "bg-gray-800 border-gray-700 text-gray-100"
+                        : "bg-white border-gray-300 text-gray-900"
+                    }`}
+                  >
+                    {[
+                      "FICTION",
+                      "NON_FICTION",
+                      "SCIENCE",
+                      "HISTORY",
+                      "BIOGRAPHY",
+                      "FANTASY",
+                    ].map((genre) => (
+                      <SelectItem key={genre} value={genre}>
+                        {genre.replace("_", " ")}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
+                <FormMessage className="text-sm text-red-500 dark:text-red-400" />
               </FormItem>
             )}
           />
 
           <FormField
             control={form.control}
-            name='isbn'
+            name="isbn"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>ISBN*</FormLabel>
+                <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  ISBN*
+                </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder='ISBN number'
+                    placeholder="Enter ISBN number"
                     {...field}
-                    className={
-                      theme === "dark" ? "bg-gray-700 border-gray-600" : ""
-                    }
+                    className={`rounded-md transition-colors duration-200 ${
+                      theme === "dark"
+                        ? "bg-gray-700 border-gray-600 text-gray-100 focus:ring-blue-500"
+                        : "bg-white border-gray-300 text-gray-900 focus:ring-blue-400"
+                    }`}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-sm text-red-500 dark:text-red-400" />
               </FormItem>
             )}
           />
 
           <FormField
             control={form.control}
-            name='publishedYear'
+            name="publishedYear"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Publication Year</FormLabel>
+                <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Publication Year
+                </FormLabel>
                 <FormControl>
                   <Input
-                    type='number'
-                    min='1600'
+                    type="number"
+                    min="1600"
                     max={new Date().getFullYear()}
                     {...field}
                     value={field.value ?? ""}
@@ -148,76 +180,90 @@ const EditBookForm = ({
                           : parseInt(e.target.value)
                       )
                     }
-                    className={
-                      theme === "dark" ? "bg-gray-700 border-gray-600" : ""
-                    }
+                    className={`rounded-md transition-colors duration-200 ${
+                      theme === "dark"
+                        ? "bg-gray-700 border-gray-600 text-gray-100 focus:ring-blue-500"
+                        : "bg-white border-gray-300 text-gray-900 focus:ring-blue-400"
+                    }`}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-sm text-red-500 dark:text-red-400" />
               </FormItem>
             )}
           />
 
           <FormField
             control={form.control}
-            name='copies'
+            name="copies"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Copies*</FormLabel>
+                <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Copies*
+                </FormLabel>
                 <FormControl>
                   <Input
-                    type='number'
-                    min='0'
+                    type="number"
+                    min="0"
                     {...field}
                     onChange={(e) => {
                       const value = parseInt(e.target.value);
                       field.onChange(isNaN(value) ? "" : value);
                     }}
-                    className={
-                      theme === "dark" ? "bg-gray-700 border-gray-600" : ""
-                    }
+                    className={`rounded-md transition-colors duration-200 ${
+                      theme === "dark"
+                        ? "bg-gray-700 border-gray-600 text-gray-100 focus:ring-blue-500"
+                        : "bg-white border-gray-300 text-gray-900 focus:ring-blue-400"
+                    }`}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-sm text-red-500 dark:text-red-400" />
               </FormItem>
             )}
           />
 
           <FormField
             control={form.control}
-            name='image'
+            name="image"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Cover Image URL</FormLabel>
+                <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  Cover Image URL
+                </FormLabel>
                 <FormControl>
                   <Input
-                    placeholder='Image URL'
+                    placeholder="Enter image URL"
                     {...field}
-                    className={
-                      theme === "dark" ? "bg-gray-700 border-gray-600" : ""
-                    }
+                    className={`rounded-md transition-colors duration-200 ${
+                      theme === "dark"
+                        ? "bg-gray-700 border-gray-600 text-gray-100 focus:ring-blue-500"
+                        : "bg-white border-gray-300 text-gray-900 focus:ring-blue-400"
+                    }`}
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-sm text-red-500 dark:text-red-400" />
               </FormItem>
             )}
           />
 
           <FormField
             control={form.control}
-            name='available'
+            name="available"
             render={({ field }) => (
-              <FormItem className='flex flex-row items-center gap-3 pt-6 pl-4'>
+              <FormItem className="flex flex-row items-center gap-3 pt-4">
                 <FormControl>
                   <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
-                    className={theme === "dark" ? "border-gray-400" : ""}
+                    className={`rounded transition-colors duration-200 ${
+                      theme === "dark"
+                        ? "border-gray-400 text-blue-500 focus:ring-blue-500"
+                        : "border-gray-300 text-blue-600 focus:ring-blue-400"
+                    }`}
                   />
                 </FormControl>
-                <div className='leading-none'>
-                  <FormLabel>Available for borrowing</FormLabel>
-                </div>
+                <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300 leading-none">
+                  Available for borrowing
+                </FormLabel>
               </FormItem>
             )}
           />
@@ -225,28 +271,32 @@ const EditBookForm = ({
 
         <FormField
           control={form.control}
-          name='description'
+          name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description*</FormLabel>
+              <FormLabel className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Description*
+              </FormLabel>
               <FormControl>
                 <Textarea
-                  placeholder='Book description'
-                  className={`min-h-[120px] ${
-                    theme === "dark" ? "bg-gray-700 border-gray-600" : ""
+                  placeholder="Enter book description"
+                  className={`min-h-[140px] rounded-md transition-colors duration-200 ${
+                    theme === "dark"
+                      ? "bg-gray-700 border-gray-600 text-gray-100 focus:ring-blue-500"
+                      : "bg-white border-gray-300 text-gray-900 focus:ring-blue-400"
                   }`}
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-sm text-red-500 dark:text-red-400" />
             </FormItem>
           )}
         />
 
-        <div className='flex justify-end gap-2'>
+        <div className="flex justify-end gap-3 pt-4">
           <Button
-            type='button'
-            variant='outline'
+            type="button"
+            variant="outline"
             onClick={() => {
               if (window.history.length > 2) {
                 navigate(-1);
@@ -254,19 +304,27 @@ const EditBookForm = ({
                 navigate(`/books/${form.getValues()?._id}`);
               }
             }}
-            className={theme === "dark" ? "border-gray-600" : ""}>
+            className={`rounded-md transition-colors duration-200 ${
+              theme === "dark"
+                ? "border-gray-600 text-gray-200 hover:bg-gray-700"
+                : "border-gray-300 text-gray-700 hover:bg-gray-100"
+            }`}
+          >
             Cancel
           </Button>
           <Button
-            type='submit'
+            type="submit"
             disabled={isLoading}
-            className={
+            className={`rounded-md transition-colors duration-200 ${
               isLoading
                 ? theme === "dark"
-                  ? "bg-gray-600"
-                  : "bg-gray-300"
-                : ""
-            }>
+                  ? "bg-gray-600 text-gray-300"
+                  : "bg-gray-300 text-gray-500"
+                : theme === "dark"
+                ? "bg-blue-600 hover:bg-blue-700 text-white"
+                : "bg-blue-500 hover:bg-blue-600 text-white"
+            }`}
+          >
             {isLoading ? "Saving..." : "Save Changes"}
           </Button>
         </div>
